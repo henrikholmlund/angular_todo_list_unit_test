@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My fast todo</title>
+    <style>
+
+        .done{
+            text-decoration: line-through;
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+    <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+    <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+</head>
+
+<body ng-app="myTodo">
+    <div ng-controller="todoController as todoCtrl">
+        <header>
+            <h1>Fast Angular-Todo</h1>
+            <div>
+                <form name="addForm" ng-submit="addTodo(todo.name)">
+                    <input type="text" ng-model="todo.name" placeholder="Add a todo" required>
+
+                </form>
+            </div>
+        </header>
+        <!-- Ej avklarade todos -->
+        <div>
+            <h3>Stuff todo:</h3>
+            <section>
+                <div ng-repeat="todo in todoCtrl.todos" ng-show="todo.active">
+                    <div>
+
+                        <div ng-show="todo.edit">
+                            <form ng-submit="editTodoName(new.name, $index)">
+                                <input type="text" placeholder="{{todo.todoName}}" ng-model="new.name" required>
+                            </form>
+                        </div>
+
+
+                        <div>
+                            <span ng-hide="todo.edit">{{todo.todoName}}</span>
+                            <button ng-click="todoCompleted()">Add todo to completed</button>
+                        </div>
+
+                        <div>
+                            <div ><button ng-click="editTodo($index)">Edit</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- todos avklarade -->
+
+                    <section>
+                        <h3>Completed stuff</h3>
+                        <div ng-repeat="todo in todoCtrl.todos" ng-hide="todo.active">
+
+                                <div>
+                                    <span ng-hide="todo.edit" class="done">{{todo.todoName}}</span>
+                                    <button ng-click="todoDelete(todo)">Delete!</button>
+                                </div>
+
+                                <div class="right-section flex-center">
+                                    <button ng-click="todoNotCompleted(todo)">Imma changed my mind! Stuff is not done</button>
+                                </div>
+                        </div>
+                    </section>
+        </div>
+
+    </div>
+
+
+
+<script src="node_modules/angular/angular.js"></script>
+<script src="app/main.js"></script>
+
+</body>
+</html>
